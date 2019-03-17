@@ -1,0 +1,43 @@
+<%= form_tag("/", csrf_token: true) do %>
+  <%= if @result do %>
+    <output>
+      <h1><%= @result.win_rate %>% chans</h1>
+      <p>
+        Trupper kvar: <strong><%= @result.avg_remaining %></strong> (medel), 
+        <strong><%= @result.med_remaining %></strong> (median)
+      </p>
+    </output>
+  <% else %>
+    <h1>RISK Battle Simulator</h1>
+  <% end %>
+  <fieldset>
+    <legend>Anfallande trupper</legend>
+    <p>
+      <label for="attacking">Antal</label>
+      <input type="number" name="attacking" id="attacking" value="<%= @values.attacking %>" pattern="0-9+" required>
+    </p>
+    <p>
+      <input type="checkbox" name="options[]" <%= if @values.has_hero do %>checked<% end %> id="hasHero" value="has_hero">
+      <label for="hasHero">Har hjälte</label>
+    </p>
+  </fieldset>
+  <fieldset>
+    <legend>Försvarande trupper</legend>
+    <p>
+      <label for="defending">Antal</label>
+      <input type="number" name="defending" id="defending" value="<%= @values.defending %>" pattern="0-9+" required>
+    </p>
+    <p>
+      <input type="checkbox" name="options[]" <%= if @values.is_fort do %>checked<% end %> id="isFort" value="is_fort">
+      <label for="isFort">Befästning</label>
+    </p>
+  </fieldset>
+  <p>
+    <label for="battles">Antal</label>
+    <input type="number" step="100" name="battles" id="battles" value="<%= @values.battles %>" pattern="0-9+" required>
+    <small>Högre antal ger bättre sannolikhet</small>
+  </p>
+  <div>
+    <button type="submit">💣 Beräkna</button>
+  </div>
+<% end %>
