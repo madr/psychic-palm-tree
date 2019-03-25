@@ -1,7 +1,7 @@
 defmodule RiskBattleSimulatorWeb.BattleController do
   use RiskBattleSimulatorWeb, :controller
 
-  def simulate(conn, %{
+  def simulation(conn, %{
         "attacking" => attacking_troops,
         "defending" => defending_troops,
         "battles" => num,
@@ -11,7 +11,7 @@ defmodule RiskBattleSimulatorWeb.BattleController do
     render(conn, "battle.html", results)
   end
 
-  def simulate(conn, %{
+  def simulation(conn, %{
         "attacking" => attacking_troops,
         "defending" => defending_troops,
         "battles" => num
@@ -20,7 +20,7 @@ defmodule RiskBattleSimulatorWeb.BattleController do
     render(conn, "battle.html", results)
   end
 
-  def simulate(conn, _) do
+  def simulation(conn, _) do
     render(conn, "battle.html", %{
       result: false,
       values: %{
@@ -33,7 +33,7 @@ defmodule RiskBattleSimulatorWeb.BattleController do
     })
   end
 
-  defp do_simulate([attacking_troops, defending_troops, num], options) do
+  defp simulate([attacking_troops, defending_troops, num], options) do
     RiskDice.simulate(attacking_troops, defending_troops, num, options)
   end
 
@@ -41,7 +41,7 @@ defmodule RiskBattleSimulatorWeb.BattleController do
     result =
       [attacking_troops, defending_troops, num]
       |> Enum.map(&String.to_integer/1)
-      |> do_simulate(options)
+      |> simulate(options)
 
     %{
       result: result,

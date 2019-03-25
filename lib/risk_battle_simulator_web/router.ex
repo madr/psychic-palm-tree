@@ -16,7 +16,7 @@ defmodule RiskBattleSimulatorWeb.Router do
   scope "/", RiskBattleSimulatorWeb do
     pipe_through :browser
 
-    get "/", BattleController, :simulate
-    post "/", BattleController, :simulate
+    get "/", BattleController, :simulation
+    post "/", BattleController, :simulation
   end
 end
