@@ -1,0 +1,40 @@
+<form phx-change="simulate" class="live">
+  <%= if @result do %>
+    <output>
+      <h1><%= @result.win_rate %>% chans till vinst</h1>
+      <p>
+        Trupper kvar: <strong><%= @result.avg_remaining %></strong> (medel), 
+        <strong><%= @result.med_remaining %></strong> (median)
+      </p>
+    </output>
+  <% else %>
+    <h1>RISK Battle Simulator</h1>
+  <% end %>
+  <fieldset>
+    <legend>Anfallande trupper</legend>
+    <p>
+      <label for="attacking">Antal</label>
+      <input type="number" <%= if @loading, do: "readonly" %> name="attacking" id="attacking" value="<%= @attacking %>" pattern="0-9+" required>
+    </p>
+    <p>
+      <input type="checkbox" <%= if @loading, do: "readonly" %> name="options[]" <%= if @has_hero do %>checked<% end %> id="hasHero" value="has_hero">
+      <label for="hasHero">Har hjälte</label>
+    </p>
+  </fieldset>
+  <fieldset>
+    <legend>Försvarande trupper</legend>
+    <p>
+      <label for="defending">Antal</label>
+      <input type="number" <%= if @loading, do: "readonly" %> name="defending" id="defending" value="<%= @defending %>" pattern="0-9+" required>
+    </p>
+    <p>
+      <input type="checkbox" <%= if @loading, do: "readonly" %> name="options[]" <%= if @is_fort do %>checked<% end %> id="isFort" value="is_fort">
+      <label for="isFort">Befästning</label>
+    </p>
+  </fieldset>
+  <p>
+    <label for="battles">Antal simulationer</label>
+    <input type="number" <%= if @loading, do: "readonly" %> step="100" name="battles" id="battles" value="<%= @battles %>" pattern="0-9+" required>
+    <small>Högre antal ger bättre sannolikhet</small>
+  </p>
+</form>
