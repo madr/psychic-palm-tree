@@ -1,6 +1,8 @@
 defmodule RiskBattleSimulatorWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :risk_battle_simulator
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", RiskBattleSimulatorWeb.UserSocket,
     websocket: true,
     longpoll: false

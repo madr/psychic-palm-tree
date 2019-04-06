@@ -52,7 +52,8 @@ config :risk_battle_simulator, RiskBattleSimulatorWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/risk_battle_simulator_web/views/.*(ex)$},
-      ~r{lib/risk_battle_simulator_web/templates/.*(eex)$}
+      ~r{lib/risk_battle_simulator_web/templates/.*(eex)$},
+      ~r{lib/risk_battle_simulator_web/live/.*(ex)$}
     ]
   ]
 

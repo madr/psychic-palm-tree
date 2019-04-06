@@ -12,7 +12,8 @@ config :risk_battle_simulator, RiskBattleSimulatorWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "S9VOCKxla7bKLg4EHYaRQUv6+Foaru0WJaqoOhp5IFIIfMEXqOLr5bxmM8vOQgaA",
   render_errors: [view: RiskBattleSimulatorWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: RiskBattleSimulator.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: RiskBattleSimulator.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [signing_salt: "kvsHmKpXAvda8vnfpp42l5AP7k7OOGzv"]
 
 # Configures Elixir's Logger
 config :logger, :console,
