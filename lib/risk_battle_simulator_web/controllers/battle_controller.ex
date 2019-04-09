@@ -24,6 +24,14 @@ defmodule RiskBattleSimulatorWeb.BattleController do
     render(conn, "battle.html", results)
   end
 
+  def simulation(conn, %{
+      "attacking" => attacking_troops,
+      "defending" => defending_troops,
+      }) do
+    results = response(attacking_troops, defending_troops, Integer.to_string(@default_num))
+    render(conn, "battle.html", results)
+  end
+
   def simulation(conn, _) do
     render(conn, "battle.html", %{
       result: false,
