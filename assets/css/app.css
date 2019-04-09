@@ -31,7 +31,7 @@ small {
     align-content: flex-end;
   }
 
-  form :nth-child(3),
+  form :nth-child(2),
   form > div,
   form > p {
     grid-column: 1 / 3;

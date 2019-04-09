@@ -1,4 +1,4 @@
-<%= form_tag("/", csrf_token: true) do %>
+<%= form_tag("/", csrf_token: true, method: :get) do %>
   <%= if @result do %>
     <output>
       <h1><%= @result.win_rate %>% chans</h1>
