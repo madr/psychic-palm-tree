@@ -1,6 +1,10 @@
 defmodule RiskBattleSimulatorWeb.BattleController do
   use RiskBattleSimulatorWeb, :controller
 
+  @default_num 300
+  @default_attacking 3
+  @default_defending 2
+
   def simulation(conn, %{
         "attacking" => attacking_troops,
         "defending" => defending_troops,
@@ -24,11 +28,11 @@ defmodule RiskBattleSimulatorWeb.BattleController do
     render(conn, "battle.html", %{
       result: false,
       values: %{
-        :attacking => 3,
-        :defending => 2,
+        :attacking => @default_attacking,
+        :defending => @default_defending,
         :has_hero => false,
         :is_fort => false,
-        :battles => 300
+        :battles => @default_num
       }
     })
   end
