@@ -15,6 +15,12 @@ defmodule RiskBattleSimulatorWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", RiskBattleSimulatorWeb do
+    pipe_through :api
+
+    resources "/", ApiController, only: [:index, :create]
+  end
+
   scope "/", RiskBattleSimulatorWeb do
     pipe_through :browser
 
