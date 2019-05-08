@@ -40,10 +40,10 @@ small {
   }
 
   form.live {
-    grid-template-rows: repeat(4);
+    grid-template-rows: repeat(4, auto);
   }
 
-  form.live :nth-child(3) {
+  form.live :nth-child(2) {
     grid-column: auto;
   }
 
