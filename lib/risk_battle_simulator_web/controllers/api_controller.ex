@@ -1,5 +1,6 @@
 defmodule RiskBattleSimulatorWeb.ApiController do
   use RiskBattleSimulatorWeb, :controller
+  import Ecto.Changeset
 
   @default_num 300
 
@@ -12,10 +13,10 @@ defmodule RiskBattleSimulatorWeb.ApiController do
           :required => "yes"
         },
         %{
-          :name => "hasHero",
+          :name => "has_hero",
           :type => "bool",
           :required => "no",
-          :default => 0
+          :default => false
         },
         %{
           :name => "defending",
@@ -23,16 +24,16 @@ defmodule RiskBattleSimulatorWeb.ApiController do
           :required => "yes"
         },
         %{
-          :name => "isFort",
+          :name => "is_fort",
           :type => "bool",
           :required => "no",
-          :default => 0
+          :default => false
         },
         %{
           :name => "battles",
           :type => "integer",
           :required => "no",
-          :default => 300
+          :default => @default_num
         }
       ]
     }
@@ -40,24 +41,34 @@ defmodule RiskBattleSimulatorWeb.ApiController do
     json(conn, payload)
   end
 
-  def create(conn, %{
-        "attacking" => attacking,
-        "defending" => defending
-      }) do
-    payload = [attacking, defending]
-    |> Enum.map(&String.to_integer/1)
-    |> simulate
+  def create(conn, data) do
+    simulation = %Simulation{}
+    changeset = Simulation.changeset(simulation, data)
 
-    json(conn, payload)
+    case changeset.valid? do
+      true -> json(conn, changeset |> simulate)
+      false -> json(conn, %{errors: "Sorry, bad input."})
+    end
   end
 
-  defp simulate(_, options \\ [])
+  defp simulate(changeset) do
+    data =
+      changeset
+      |> apply_changes
+      |> Map.from_struct()
 
-  defp simulate([attacking_troops, defending_troops, num], options) do
-    RiskDice.simulate(attacking_troops, defending_troops, num, options)
+    attacking = data |> Map.fetch!(:attacking) |> IO.inspect()
+    defending = data |> Map.fetch!(:defending) |> IO.inspect()
+    battles = data |> Map.fetch!(:battles) |> IO.inspect()
+    options = data |> get_options |> IO.inspect()
+    RiskDice.simulate(attacking, defending, battles, options)
   end
 
-  defp simulate([attacking_troops, defending_troops], options) do
-    RiskDice.simulate(attacking_troops, defending_troops, @default_num, options)
-  end
+  defp get_options(%{has_hero: true, is_fort: true}), do: ["has_hero", "is_fort"]
+
+  defp get_options(%{has_hero: false, is_fort: true}), do: ["is_fort"]
+
+  defp get_options(%{has_hero: true, is_fort: false}), do: ["has_hero"]
+
+  defp get_options(%{has_hero: false, is_fort: false}), do: []
 end
