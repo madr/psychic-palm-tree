@@ -54,21 +54,28 @@ defmodule RiskBattleSimulatorWeb.ApiController do
   defp simulate(changeset) do
     data =
       changeset
-      |> apply_changes
+      |> apply_changes()
       |> Map.from_struct()
 
-    attacking = data |> Map.fetch!(:attacking) |> IO.inspect()
-    defending = data |> Map.fetch!(:defending) |> IO.inspect()
-    battles = data |> Map.fetch!(:battles) |> IO.inspect()
-    options = data |> get_options |> IO.inspect()
+    %{
+      __meta__: _meta,
+      has_hero: has_hero,
+      is_fort: is_fort,
+      attacking: attacking,
+      defending: defending,
+      battles: battles
+    } = data
+
+    options = get_options(has_hero, is_fort)
+
     RiskDice.simulate(attacking, defending, battles, options)
   end
 
-  defp get_options(%{has_hero: true, is_fort: true}), do: ["has_hero", "is_fort"]
+  defp get_options(true, true), do: ["has_hero", "is_fort"]
 
-  defp get_options(%{has_hero: false, is_fort: true}), do: ["is_fort"]
+  defp get_options(false, true), do: ["is_fort"]
 
-  defp get_options(%{has_hero: true, is_fort: false}), do: ["has_hero"]
+  defp get_options(true, false), do: ["has_hero"]
 
-  defp get_options(%{has_hero: false, is_fort: false}), do: []
+  defp get_options(false, false), do: []
 end
