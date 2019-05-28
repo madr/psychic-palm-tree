@@ -3,8 +3,8 @@ defmodule Simulation do
   import Ecto.Changeset
 
   schema "simulations" do
-    field(:attacking, :integer)
-    field(:defending, :integer)
+    field(:attacking, :integer, default: 3)
+    field(:defending, :integer, default: 2)
     field(:has_hero, :boolean, default: false)
     field(:is_fort, :boolean, default: false)
     field(:battles, :integer, default: 300)
