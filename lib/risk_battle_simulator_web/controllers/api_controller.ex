@@ -66,16 +66,8 @@ defmodule RiskBattleSimulatorWeb.ApiController do
       battles: battles
     } = data
 
-    options = get_options(has_hero, is_fort)
+    options = Simulation.get_options(has_hero, is_fort)
 
     RiskDice.simulate(attacking, defending, battles, options)
   end
-
-  defp get_options(true, true), do: ["has_hero", "is_fort"]
-
-  defp get_options(false, true), do: ["is_fort"]
-
-  defp get_options(true, false), do: ["has_hero"]
-
-  defp get_options(false, false), do: []
 end
